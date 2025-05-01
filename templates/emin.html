@@ -64,8 +64,8 @@
         <!-- Sag tarap: Jogaplar -->
         <div class="content-area">
             <div class="answer-container" id="answer1">
-                <h2>Topar 1</h2>
-                <p>Bu ýerde Topar 1-iň 1-nji soragyna berilen jogap görkezileroragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezile...</p>
+                <h2 class="welcome-text">Topar 1</h2>
+                <p class="welcome-text">Bu ýerde Topar 1-iň 1-nji soragyna berilen jogap görkezileroragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezile...</p>
             </div>
 
             <div class="answer-container hidden" id="answer2">
@@ -77,8 +77,20 @@
                 <h2>Topar 3</h2>
                 <p>Bu ýerde Topar 3-niň 2-nji soragyna berilen jogap görkeziler...</p>
             </div>
+            <div class="judge-container">
+                <div class="evaluation-form">
+                    <label for="answer-grade">Baha:</label>
+                    <input type="number" id="answer-grade" name="answer-grade" min="0" max="100" placeholder="0-100">
+                    <button id="submit-grade">Baha Ber (Ввод оценки)</button>
+                </div>
+                <div id="evaluation-result" class="hidden">
+                    Netije: <span id="result-value"></span>
+                </div>
+            </div>
         </div>
     </div>
+
+    
 
     <!-- Çykyş dialogy -->
     <div class="logout-dialog" id="logoutDialog">
@@ -98,52 +110,48 @@
             const questionItems = document.querySelectorAll('.question-item');
             const answerContainers = document.querySelectorAll('.answer-container');
         
-            function openGroupAndClickFirstQuestion(groupDataAttribute, questionDataAnswer) {
-                groupItems.forEach(group => {
-                    if (group.getAttribute('data-group') === groupDataAttribute) {
+            // Обработчик клика на заголовок группы
+            groupItems.forEach(currentGroup => {
+                const header = currentGroup.querySelector('.group-header');
+                if (header) {
+                    header.addEventListener('click', () => {
+                        const isCurrentlyActive = currentGroup.classList.contains('active');
+        
                         // Закрываем все остальные открытые группы
                         groupItems.forEach(otherGroup => {
-                            if (otherGroup !== group && otherGroup.classList.contains('active')) {
+                            if (otherGroup !== currentGroup && otherGroup.classList.contains('active')) {
                                 otherGroup.classList.remove('active');
+                                // Скрываем ответы, связанные с закрытой группой (если нужно)
+                                const questionsInOtherGroup = otherGroup.querySelectorAll('.question-item');
+                                if (questionsInOtherGroup.length > 0 && questionsInOtherGroup[0].hasAttribute('data-answer')) {
+                                    const answerIdToHide = questionsInOtherGroup[0].getAttribute('data-answer');
+                                    const answerToShow = document.getElementById(answerIdToHide);
+                                    if (answerToShow) {
+                                        answerToShow.classList.add('hidden');
+                                    }
+                                }
                             }
                         });
-                        // Открываем нужную группу
-                        group.classList.add('active');
         
-                        // Находим и кликаем нужный вопрос внутри группы
-                        const questionsInGroup = group.querySelectorAll('.question-item');
-                        questionsInGroup.forEach(question => {
-                            if (question.getAttribute('data-answer') === questionDataAnswer) {
-                                question.click(); // Эмулируем клик по вопросу
+                        // Если текущая группа не была активна, открываем ее и кликаем на первый элемент
+                        if (!isCurrentlyActive) {
+                            currentGroup.classList.add('active');
+                            const firstQuestion = currentGroup.querySelector('.questions-list .question-item');
+                            if (firstQuestion) {
+                                firstQuestion.click();
                             }
-                        });
-                    } else if (group.classList.contains('active')) {
-                        group.classList.remove('active'); // Закрываем остальные группы
-                    }
-                });
-            }
-        
-            // Обработчик клика на "Sorag 1"
-            groupItems.forEach(group => {
-                const header = group.querySelector('.group-header');
-                if (header && header.textContent.trim() === 'Sorag 1') {
-                    header.addEventListener('click', () => {
-                        openGroupAndClickFirstQuestion('group1', 'answer1');
+                        } else {
+                            // Если текущая группа была активна, закрываем ее и скрываем все ответы
+                            currentGroup.classList.remove('active');
+                            answerContainers.forEach(container => container.classList.add('hidden'));
+                            // Дополнительно можно снять класс 'active' с выбранного вопроса (если есть)
+                            questionItems.forEach(item => item.classList.remove('active'));
+                        }
                     });
                 }
             });
         
-            // Обработчик клика на "Sorag 2"
-            groupItems.forEach(group => {
-                const header = group.querySelector('.group-header');
-                if (header && header.textContent.trim() === 'Sorag 2') {
-                    header.addEventListener('click', () => {
-                        openGroupAndClickFirstQuestion('group2', 'answer3');
-                    });
-                }
-            });
-        
-            // Обработчики клика на вопросы (для обычного выбора)
+            // Обработчики клика на вопросы (остаются без изменений)
             questionItems.forEach(item => {
                 item.addEventListener('click', function() {
                     // Делаем неактивными все вопросы в текущей группе
@@ -191,9 +199,10 @@
                 }
             });
         
-            // При загрузке страницы открываем первую группу и показываем первый ответ (если есть)
+            // При загрузке страницы (можно открыть первую группу и ее первый элемент)
             if (groupItems.length > 0) {
-                // По умолчанию ничего не открываем и не нажимаем
+                // Раскомментируйте, если хотите, чтобы первая группа была открыта по умолчанию
+                // groupItems[0].querySelector('.group-header').click();
             }
         });
     </script>

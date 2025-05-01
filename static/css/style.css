@@ -1,5 +1,69 @@
-/* Esas düzüm */
+.evaluation-form {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.evaluation-form label {
+    font-weight: bold;
+    color: #333;
+}
+
+.evaluation-form input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.evaluation-form button {
+    background-color: #00986A;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.evaluation-form button:hover {
+    background-color: #007a56;
+}
+
+#evaluation-result {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+#evaluation-result span {
+    font-weight: bold;
+    color: #00986A;
+}
+
+/* Стиль для кнопки "Оценить" (если вы ее добавите рядом с ответом) */
+.evaluate-button {
+    background-color: #f0ad4e; /* Желто-оранжевый цвет */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.evaluate-button:hover {
+    background-color: #d98e32;
+}
+
 .main-container {
+    width: 100%;
     display: flex;
     height: calc(100vh - 60px);
     margin-top: 60px;
@@ -9,7 +73,7 @@
 /* Çep sidebar (Soraglar we Toparlar) */
 .sidebar {
     width: 300px; /* Фиксированная ширина sidebar */
-    background: #f8f9fa;
+    background: #ffff;
     border-right: 1px solid #e0e0e0;
     overflow-y: auto;
     flex-shrink: 0; /* Запрещаем sidebar сжиматься */
@@ -27,7 +91,7 @@
 
 .group-header {
     padding: 12px 15px;
-    background: #1b8d09;
+    background: #00986A;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -70,17 +134,17 @@
 }
 
 .question-item.active {
-    background: #e3f2fd;
-    border-left: 3px solid #1b8d09;
+    background: #f0fff2;
+    border-left: 3px solid #00986A;
 }
 
 /* Sag tarap (Jogaplar) */
 .content-area {
     /* flex: 1; */ /* Больше не позволяем занимать все доступное пространство */
-    width: 500px; /* Задаем фиксированную ширину для answer-container (или content-area) */
-    padding: 20px;
+    width: 100%; /* Задаем фиксированную ширину для answer-container (или content-area) */
+    padding: 60px;
     overflow-y: auto;
-    flex-shrink: 0; /* Запрещаем content-area сжиматься */
+    /* flex-shrink: 0; Запрещаем content-area сжиматься */
 }
 
 .answer-container {
@@ -93,7 +157,7 @@
 }
 
 .answer-container h2 {
-    color: #1b8d09;
+    color: #00986A;
     margin-bottom: 15px;
 }
 
@@ -108,6 +172,7 @@
         height: auto; /* Автоматическая высота контейнера */
     }
     .sidebar {
+        color: #ffff;
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #e0e0e0;
