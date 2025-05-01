@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorag-Jogap Sahypasy</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header-bar">
+        <div class="header-content">
+            <div class="header-div">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo" class="header-logo">
+            </div>
+            <div class="profile-section">
+                <span class="profile-name">Admin</span>
+                <img src="{% static 'img/logo.jpg' %}" alt="Profil" class="profile-pic">
+                <button class="logout-button" id="logoutBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Çep tarap: Soraglar we Toparlar -->
+        <div class="sidebar">
+            <div class="groups-list">
+                <!-- Topar 1 -->
+                <div class="group-item" data-group="group1">
+                    <div class="group-header">
+                        <span>Sorag 1</span>
+                        <svg class="group-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="questions-list">
+                        <div class="question-item" data-answer="answer1">Topar 1</div>
+                        <div class="question-item" data-answer="answer2">Topar 2</div>
+                    </div>
+                </div>
+
+                <!-- Topar 2 -->
+                <div class="group-item" data-group="group2">
+                    <div class="group-header">
+                        <span>Sorag 2</span>
+                        <svg class="group-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="questions-list">
+                        <div class="question-item" data-answer="answer3">Topar 3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sag tarap: Jogaplar -->
+        <div class="content-area">
+            <div class="answer-container" id="answer1">
+                <h2>Topar 1</h2>
+                <p>Bu ýerde Topar 1-iň 1-nji soragyna berilen jogap görkezileroragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezileoragyna berilen jogap görkezile...</p>
+            </div>
+
+            <div class="answer-container hidden" id="answer2">
+                <h2>Topar 2</h2>
+                <p>Bu ýerde Topar 1-iň 1-nji soragyna berilen jogap görkeziler...</p>
+            </div>
+
+            <div class="answer-container hidden" id="answer3">
+                <h2>Topar 3</h2>
+                <p>Bu ýerde Topar 3-niň 2-nji soragyna berilen jogap görkeziler...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Çykyş dialogy -->
+    <div class="logout-dialog" id="logoutDialog">
+        <div class="dialog-content">
+            <h3>Duýduryş!</h3>
+            <p>Hakykatdanam çykmak isleýärsiňizmi?</p>
+            <div class="dialog-buttons">
+                <button class="dialog-btn confirm-btn">Hawa</button>
+                <button class="dialog-btn cancel-btn">Ýok</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const groupItems = document.querySelectorAll('.group-item');
+            const questionItems = document.querySelectorAll('.question-item');
+            const answerContainers = document.querySelectorAll('.answer-container');
+        
+            function openGroupAndClickFirstQuestion(groupDataAttribute, questionDataAnswer) {
+                groupItems.forEach(group => {
+                    if (group.getAttribute('data-group') === groupDataAttribute) {
+                        // Закрываем все остальные открытые группы
+                        groupItems.forEach(otherGroup => {
+                            if (otherGroup !== group && otherGroup.classList.contains('active')) {
+                                otherGroup.classList.remove('active');
+                            }
+                        });
+                        // Открываем нужную группу
+                        group.classList.add('active');
+        
+                        // Находим и кликаем нужный вопрос внутри группы
+                        const questionsInGroup = group.querySelectorAll('.question-item');
+                        questionsInGroup.forEach(question => {
+                            if (question.getAttribute('data-answer') === questionDataAnswer) {
+                                question.click(); // Эмулируем клик по вопросу
+                            }
+                        });
+                    } else if (group.classList.contains('active')) {
+                        group.classList.remove('active'); // Закрываем остальные группы
+                    }
+                });
+            }
+        
+            // Обработчик клика на "Sorag 1"
+            groupItems.forEach(group => {
+                const header = group.querySelector('.group-header');
+                if (header && header.textContent.trim() === 'Sorag 1') {
+                    header.addEventListener('click', () => {
+                        openGroupAndClickFirstQuestion('group1', 'answer1');
+                    });
+                }
+            });
+        
+            // Обработчик клика на "Sorag 2"
+            groupItems.forEach(group => {
+                const header = group.querySelector('.group-header');
+                if (header && header.textContent.trim() === 'Sorag 2') {
+                    header.addEventListener('click', () => {
+                        openGroupAndClickFirstQuestion('group2', 'answer3');
+                    });
+                }
+            });
+        
+            // Обработчики клика на вопросы (для обычного выбора)
+            questionItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Делаем неактивными все вопросы в текущей группе
+                    const currentQuestionsList = this.closest('.questions-list');
+                    if (currentQuestionsList) {
+                        currentQuestionsList.querySelectorAll('.question-item').forEach(q => q.classList.remove('active'));
+                    }
+                    // Делаем активным текущий вопрос
+                    this.classList.add('active');
+        
+                    // Скрываем все ответы
+                    answerContainers.forEach(a => a.classList.add('hidden'));
+        
+                    // Показываем выбранный ответ
+                    const answerId = this.getAttribute('data-answer');
+                    const selectedAnswer = document.getElementById(answerId);
+                    if (selectedAnswer) {
+                        selectedAnswer.classList.remove('hidden');
+                    }
+                });
+            });
+        
+            // Çykyş dialogy (остается без изменений)
+            const logoutBtn = document.getElementById('logoutBtn');
+            const logoutDialog = document.getElementById('logoutDialog');
+            const confirmBtn = document.querySelector('.confirm-btn');
+            const cancelBtn = document.querySelector('.cancel-btn');
+        
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                logoutDialog.style.display = 'flex';
+            });
+        
+            confirmBtn.addEventListener('click', () => {
+                window.location.href = "{% url 'home' %}";
+            });
+        
+            cancelBtn.addEventListener('click', () => {
+                logoutDialog.style.display = 'none';
+            });
+        
+            logoutDialog.addEventListener('click', (e) => {
+                if (e.target === logoutDialog) {
+                    logoutDialog.style.display = 'none';
+                }
+            });
+        
+            // При загрузке страницы открываем первую группу и показываем первый ответ (если есть)
+            if (groupItems.length > 0) {
+                // По умолчанию ничего не открываем и не нажимаем
+            }
+        });
+    </script>
+</body>
+</html>
