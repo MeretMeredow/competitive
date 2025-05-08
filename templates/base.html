@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% comment %} <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"> {% endcomment %}
+</head>
+<body>
+    <header class="header-bar">
+        <div class="header-content">
+            <div class="header-div">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo" class="header-logo">
+            </div>
+            <div class="profile-section">
+                <span class="profile-name">Admin</span>
+                <img src="{% static 'img/logo.jpg' %}" alt="Profil" class="profile-pic">
+                <button class="logout-button" id="logoutBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        {% block content %}{% endblock content %}
+    </div>
+
+    
+
+    <!-- Çykyş dialogy -->
+    <div class="logout-dialog" id="logoutDialog">
+        <div class="dialog-content">
+            <h3>Duýduryş!</h3>
+            <p>Hakykatdanam çykmak isleýärsiňizmi?</p>
+            <div class="dialog-buttons">
+                <button class="dialog-btn confirm-btn">Hawa</button>
+                <button class="dialog-btn cancel-btn">Ýok</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const groupItems = document.querySelectorAll('.group-item');
+        const questionItems = document.querySelectorAll('.question-item');
+        const answerContainers = document.querySelectorAll('.answer-container');
+    
+        // Обработчик клика на заголовок группы
+        groupItems.forEach(currentGroup => {
+            const header = currentGroup.querySelector('.group-header');
+            if (header) {
+                header.addEventListener('click', () => {
+                    const isCurrentlyActive = currentGroup.classList.contains('active');
+    
+                    // Закрываем все остальные открытые группы
+                    groupItems.forEach(otherGroup => {
+                        if (otherGroup !== currentGroup && otherGroup.classList.contains('active')) {
+                            otherGroup.classList.remove('active');
+                            // Скрываем ответы, связанные с закрытой группой (если нужно)
+                            const questionsInOtherGroup = otherGroup.querySelectorAll('.question-item');
+                            if (questionsInOtherGroup.length > 0 && questionsInOtherGroup[0].hasAttribute('data-answer')) {
+                                const answerIdToHide = questionsInOtherGroup[0].getAttribute('data-answer');
+                                const answerToShow = document.getElementById(answerIdToHide);
+                                if (answerToShow) {
+                                    answerToShow.classList.add('hidden');
+                                }
+                            }
+                        }
+                    });
+    
+                    // Если текущая группа не была активна, открываем ее и кликаем на первый элемент
+                    if (!isCurrentlyActive) {
+                        currentGroup.classList.add('active');
+                        const firstQuestion = currentGroup.querySelector('.questions-list .question-item');
+                        if (firstQuestion) {
+                            firstQuestion.click();
+                        }
+                    } else {
+                        // Если текущая группа была активна, закрываем ее и скрываем все ответы
+                        currentGroup.classList.remove('active');
+                        answerContainers.forEach(container => container.classList.add('hidden'));
+                        // Дополнительно можно снять класс 'active' с выбранного вопроса (если есть)
+                        questionItems.forEach(item => item.classList.remove('active'));
+                    }
+                });
+            }
+        });
+    
+        // Обработчики клика на вопросы (остаются без изменений)
+        questionItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Делаем неактивными все вопросы в текущей группе
+                const currentQuestionsList = this.closest('.questions-list');
+                if (currentQuestionsList) {
+                    currentQuestionsList.querySelectorAll('.question-item').forEach(q => q.classList.remove('active'));
+                }
+                // Делаем активным текущий вопрос
+                this.classList.add('active');
+    
+                // Скрываем все ответы
+                answerContainers.forEach(a => a.classList.add('hidden'));
+    
+                // Показываем выбранный ответ
+                const answerId = this.getAttribute('data-answer');
+                const selectedAnswer = document.getElementById(answerId);
+                if (selectedAnswer) {
+                    selectedAnswer.classList.remove('hidden');
+                }
+            });
+        });
+    
+        // Çykyş dialogy (остается без изменений)
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutDialog = document.getElementById('logoutDialog');
+        const confirmBtn = document.querySelector('.confirm-btn');
+        const cancelBtn = document.querySelector('.cancel-btn');
+    
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoutDialog.style.display = 'flex';
+        });
+    
+        confirmBtn.addEventListener('click', () => {
+            window.location.href = "{% url 'home' %}";
+        });
+    
+        cancelBtn.addEventListener('click', () => {
+            logoutDialog.style.display = 'none';
+        });
+    
+        logoutDialog.addEventListener('click', (e) => {
+            if (e.target === logoutDialog) {
+                logoutDialog.style.display = 'none';
+            }
+        });
+    
+        // При загрузке страницы (можно открыть первую группу и ее первый элемент)
+        if (groupItems.length > 0) {
+            // Раскомментируйте, если хотите, чтобы первая группа была открыта по умолчанию
+            // groupItems[0].querySelector('.group-header').click();
+        }
+    });
+</script>
+</body>
+</html>

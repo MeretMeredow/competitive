@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+Competitions
+{% endblock title %}
+
+{% block content %}
+<div style="display: block;">
+{% for competition in competitions %}
+    <div style="border: 1px solid black;display: flex">
+        <a href="{% url 'emin' id=competition.id %}">
+            <h3>{{ competition.id }}</h3>
+            <h3>{{ competition.theme }}</h3>
+        </a>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock content %}

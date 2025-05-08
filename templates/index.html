@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+
+{% block title %}
+Esasy sahypa
+{% endblock title %}
+
+{% block content %}
+<h1>Main page</h1>
+
+<div style="">
+    <a href="{% url 'group' %}" style="margin-right: 20px;">Group</a>
+    <a href="{% url 'competitions' %}" style="margin-right: 20px;">Competitions</a>
+</div>
+{% endblock content %}

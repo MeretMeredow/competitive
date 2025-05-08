@@ -73,7 +73,7 @@ class Compatition(models.Model):
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.theme
+        return f'{self.id}'
 
     class Meta:
         verbose_name = 'Bäsleşik'
@@ -103,6 +103,9 @@ class Result(models.Model):
         Group, on_delete=models.CASCADE,
         primary_key=True
     )
+    # group_id = models.ManyToManyField(Group)
+    # group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+    
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
