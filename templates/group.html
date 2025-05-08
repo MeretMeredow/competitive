@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message Screen</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- Google Fonts -->
-    {% comment %} <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"> {% endcomment %}
 </head>
 <body>
     <div class="background-image"></div>
@@ -22,7 +20,7 @@
                 <span class="profile-name">Username</span>
                 <img src="{% static 'img/logo.jpg' %}" alt="Profile" class="profile-pic">
                 <button class="logout-button" id="logoutBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -32,7 +30,6 @@
         </div>
     </header>
 
-    <!-- Moved dialog outside header -->
     <div class="logout-dialog" id="logoutDialog">
         <div class="dialog-content">
             <h3>Duýduryş!</h3>
@@ -44,13 +41,58 @@
         </div>
     </div>
 
+    <div class="fixed">
+        <div class="fall">
+            <span>ЦАО</span>
+            <span>СЗАО</span>
+            <span>САО</span>
+            <span>СВАО</span>
+            <span>ВАО</span>
+            <span>ЮВАО</span>
+            <span>ЮАО</span>
+            <span>ЮЗАО</span>
+            <span>ЗАО</span>
+            <span>Апрелевка</span>
+            <span>Балашиха</span>
+            <span>Видном</span>
+            <span>Дедовск</span>
+            <span>Дзержинский</span>
+            <span>Долгопрудном</span>
+            <span>Домодедово</span>
+            <span>Железнодорожный</span>
+            <span>Жуковский</span>
+            <span>Ивантеевка</span>
+            <span>Королёв</span>
+            <span>Котельники</span>
+            <span>Красногорск</span>
+            <span>Краснознаменск</span>
+            <span>Лобне</span>
+            <span>Лыткарино</span>
+            <span>Люберцы</span>
+            <span>Люблино</span>
+            <span>Московский</span>
+            <span>Мытищи</span>
+            <span>Одинцово</span>
+            <span>Подольск</span>
+            <span>Пушкино</span>
+            <span>Реутове</span>
+            <span>Старая Купавна</span>
+            <span>Троицк</span>
+            <span>Фрязино</span>
+            <span>Химки</span>
+            <span>Щёлково</span>
+            <span>Щербинка</span>
+            <span>Юбилейный</span>
+        </div>
+    </div>
+    
+
     <div class="message-container">
         <p class="subtext">Sorag 1</p>
-        <h1 class="welcome-text">Sizde 127 sany 1 manatlyk bar, siz ony 7 gapjyga paýlamaly .
+        <h1 class="welcome-text">Sizde 127 sany 1 manatlyk bar, siz ony 7 gapjyga paýlamaly.
              Şunlukda sizden 127ä çenli islendik mukdarda pul soralanda,
               gapjyklaryň kömegibilen berip bolmaly.Sizde 127 sany 1 manatlyk bar,
                siz ony 7 gapjyga paýlamaly .</h1>
-        
         <form class="message-form">
             <textarea 
                 class="message-input" 
@@ -60,12 +102,57 @@
             ></textarea>
             <button type="submit" class="send-button">
                 <span>Jogaby Ugratmak</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
         </form>
+    </div>
+
+    <div class="fixed">
+        <div class="fall">
+            <span>ЦАО</span>
+            <span>СЗАО</span>
+            <span>САО</span>
+            <span>СВАО</span>
+            <span>ВАО</span>
+            <span>ЮВАО</span>
+            <span>ЮАО</span>
+            <span>ЮЗАО</span>
+            <span>ЗАО</span>
+            <span>Апрелевка</span>
+            <span>Балашиха</span>
+            <span>Видном</span>
+            <span>Дедовск</span>
+            <span>Дзержинский</span>
+            <span>Долгопрудном</span>
+            <span>Домодедово</span>
+            <span>Железнодорожный</span>
+            <span>Жуковский</span>
+            <span>Ивантеевка</span>
+            <span>Королёв</span>
+            <span>Котельники</span>
+            <span>Красногорск</span>
+            <span>Краснознаменск</span>
+            <span>Лобне</span>
+            <span>Лыткарино</span>
+            <span>Люберцы</span>
+            <span>Люблино</span>
+            <span>Московский</span>
+            <span>Мытищи</span>
+            <span>Одинцово</span>
+            <span>Подольск</span>
+            <span>Пушкино</span>
+            <span>Реутове</span>
+            <span>Старая Купавна</span>
+            <span>Троицк</span>
+            <span>Фрязино</span>
+            <span>Химки</span>
+            <span>Щёлково</span>
+            <span>Щербинка</span>
+            <span>Юбилейный</span>
+        </div>
     </div>
 
     <script>
@@ -89,7 +176,6 @@
                 logoutDialog.style.display = 'none';
             });
         
-            // Close when clicking outside dialog
             logoutDialog.addEventListener('click', (e) => {
                 if (e.target === logoutDialog) {
                     logoutDialog.style.display = 'none';
